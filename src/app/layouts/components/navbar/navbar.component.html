@@ -1,0 +1,103 @@
+<!-- navbar.component.html -->
+
+<nav class="bg-indigo-600 shadow-sm rounded-2xl mb-4 ">
+    <div class="container mx-auto">
+        <div class=" ">
+
+            <div class="flex items-center justify-between h-16">
+                
+                <!-- Left Section -->
+                <!-- <div class="flex items-center gap-6"> -->
+                 
+
+                    <!-- Logo -->
+                    <div class="flex items-center gap-2 text-white font-bold text-xl">
+                        <i class="pi pi-building-columns text-2xl"></i>
+                        <span>Bank Portal</span>
+                    </div>
+                @if(isLoggedIn()){
+                <div class="hidden md:flex items-center gap-2">
+                
+                    <a routerLink="/dashboard" routerLinkActive="bg-white/20 text-white" [routerLinkActiveOptions]="{ exact: true }"
+                        class="px-4 py-2 rounded-xl text-white/90 hover:bg-white/10 transition duration-200">
+                        Dashboard
+                    </a>
+                
+                    <a routerLink="/accounts" routerLinkActive="bg-white/20 text-white"
+                        class="px-4 py-2 rounded-xl text-white/90 hover:bg-white/10 transition duration-200">
+                        Accounts
+                    </a>
+                    <a routerLink="/login" routerLinkActive="bg-white/20 text-white"
+                        class="px-4 py-2 rounded-xl text-white/90 hover:bg-white/10 transition duration-200">
+                        login
+                    </a>
+                    <a routerLink="/transactions" routerLinkActive="bg-white/20 text-white"
+                        class="px-4 py-2 rounded-xl text-white/90 hover:bg-white/10 transition duration-200">
+                        Transactions
+                    </a>
+                
+                </div>
+                <div class="hidden md:flex items-center gap-4">
+
+                    <span class="text-white/80 text-sm">
+                        Welcome User
+                    </span>
+
+                    <button (click)="signOut()"
+                        class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center hover:bg-red-500/20 transition duration-200"
+                        title="Logout">
+                        <i class="pi pi-sign-out text-white text-lg"></i>
+
+                    </button>
+
+                </div>
+            }
+                <button (click)="toggleMenu()" class="md:hidden text-white p-2 rounded-lg hover:bg-white/10 transition">
+
+                    <i class="pi" [class.pi-bars]="!isMenuOpen()" [class.pi-times]="isMenuOpen()"></i>
+
+                </button>
+
+            </div>
+
+            @if (isMenuOpen()) {
+
+            <div class="md:hidden py-4 border-t border-white/10 space-y-2">
+
+                <a routerLink="/dashboard" routerLinkActive="bg-white/20" [routerLinkActiveOptions]="{ exact: true }"
+                    class="block px-4 py-3 rounded-xl text-white hover:bg-white/10 transition">
+                    Dashboard
+                </a>
+
+                <a routerLink="/accounts" routerLinkActive="bg-white/20"
+                    class="block px-4 py-3 rounded-xl text-white hover:bg-white/10 transition">
+                    Accounts
+                </a>
+
+                <a routerLink="/transactions" routerLinkActive="bg-white/20"
+                    class="block px-4 py-3 rounded-xl text-white hover:bg-white/10 transition">
+                    Transactions
+                </a>
+
+                <div class="pt-3 border-t border-white/10">
+
+                    <div class="px-4 py-2 text-white/70 text-sm">
+                        Welcome User
+                    </div>
+
+                    <button (click)="signOut()"
+                        class="w-full cursor-pointer mt-2 px-4 py-3 rounded-xl bg-red-500/20 text-white hover:bg-red-500/30 transition flex items-center justify-center gap-2">
+                        <i class="pi pi-sign-out"></i>
+                        Logout
+                    </button>
+
+                </div>
+
+            </div>
+
+            }
+
+        </div>
+
+    </div>
+</nav>

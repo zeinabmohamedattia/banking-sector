@@ -1,0 +1,69 @@
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+    @for (account of userAccounts(); track account.id) {
+
+    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition">
+
+        <!-- Top -->
+        <div class="flex items-center justify-between mb-4">
+
+            <div class="flex items-center gap-3">
+
+                <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center">
+                    <i class="pi pi-credit-card"></i>
+                </div>
+
+                <div>
+                    <h3 class="font-semibold text-gray-800">
+                        {{ account.type }}
+                    </h3>
+
+                    <p class="text-xs text-gray-500">
+                        {{ account.currency }}
+                    </p>
+                </div>
+
+            </div>
+
+            <span class="px-3 py-1 rounded-full text-xs font-medium" [class]="account.status === 'Active'
+          ? 'bg-emerald-100 text-emerald-700'
+          : 'bg-red-100 text-red-600'">
+                {{ account.status }}
+            </span>
+
+        </div>
+
+        <!-- Balance -->
+        <div class="mb-4">
+
+            <p class="text-gray-500 text-sm">Balance</p>
+
+            <h2 class="text-2xl font-bold text-gray-800">
+                {{ account.balance | number:'1.2-2' }} {{ account.currency }}
+            </h2>
+
+        </div>
+
+        <!-- IBAN -->
+        <div class="bg-gray-50 rounded-xl p-3 mb-4">
+
+            <p class="text-xs text-gray-500 mb-1">IBAN</p>
+
+            <p class="text-sm text-gray-700 break-all">
+                {{ account.iban }}
+            </p>
+
+        </div>
+
+        <!-- View Transactions Button -->
+        <a [routerLink]="['/transactions',account.id]"
+            class="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl transition">
+            <i class="pi pi-list"></i>
+            View Transactions
+        </a>
+
+    </div>
+
+    }
+
+    </div>

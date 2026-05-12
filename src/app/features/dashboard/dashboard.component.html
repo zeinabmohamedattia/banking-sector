@@ -1,0 +1,191 @@
+<!-- dashboard.component.html -->
+
+<div class="min-h-screen bg-gray-100 px-4 lg:p-6">
+
+    <!-- Header -->
+    <div class="mb-6">
+
+        <h1 class="text-3xl font-bold text-gray-800">
+            Customers Dashboard
+        </h1>
+
+        <p class="text-gray-500 mt-2">
+            Manage and monitor customer accounts
+        </p>
+
+    </div>
+
+    <!-- Stats -->
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+
+        <div class="bg-white rounded-3xl p-5 shadow-sm border border-gray-100">
+            <p class="text-gray-500 text-sm">Total Customers</p>
+
+            <h2 class="text-3xl font-bold text-indigo-600 mt-2">
+                {{ customers().length }}
+            </h2>
+        </div>
+
+        <div class="bg-white rounded-3xl p-5 shadow-sm border border-gray-100">
+            <p class="text-gray-500 text-sm">Priority Clients</p>
+
+            <h2 class="text-3xl font-bold text-amber-500 mt-2">
+                {{ priorityCustomersCount() }}
+            </h2>
+        </div>
+
+        <div class="bg-white rounded-3xl p-5 shadow-sm border border-gray-100">
+            <p class="text-gray-500 text-sm">Retail Clients</p>
+
+            <h2 class="text-3xl font-bold text-emerald-500 mt-2">
+                {{ retailCustomersCount() }}
+            </h2>
+        </div>
+
+    </div> 
+
+    <!-- Search -->
+    <!-- <div class="bg-white rounded-3xl p-4 shadow-sm border border-gray-100 mb-6">
+
+        <div class="relative">
+
+            <i class="pi pi-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+
+            <input type="text" placeholder="Search customers..."
+                class="w-full pl-12 pr-4 py-3 rounded-2xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 outline-none transition"
+                (input)="searchCustomer($event)" />
+
+        </div>
+
+    </div> -->
+
+    <!-- Customers Table -->
+    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+
+        <div class="overflow-x-auto">
+
+            <table class="w-full">
+
+                <thead class="bg-gray-50 border-b border-gray-100">
+
+                    <tr>
+
+                        <th class="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                            Customer
+                        </th>
+
+                        <th class="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                            CIF
+                        </th>
+
+                        <th class="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                            Segment
+                        </th>
+
+                        <th class="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                            Email
+                        </th>
+
+                        <th class="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                            Phone
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @for (customer of customers(); track customer.CIF) {
+                    
+                    <tr class="border-b border-gray-100 hover:bg-gray-50 transition">
+                    
+                        <!-- Customer -->
+                        <td class="px-6 py-4">
+                    
+                            <div class="flex items-center gap-3">
+                    
+                                <div class="w-11 h-11 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold">
+                                    {{ customer.name.charAt(0) }}
+                                </div>
+                    
+                                <div>
+                    
+                                    <h3 class="font-semibold text-gray-800">
+                                        {{ customer.name }}
+                                    </h3>
+                    
+                                    <p class="text-sm text-gray-500">
+                                        {{ customer.nationalId }}
+                                    </p>
+                    
+                                </div>
+                    
+                            </div>
+                    
+                        </td>
+                    
+                        <!-- CIF -->
+                        <td class="px-6 py-4 text-gray-700 font-medium">
+                            {{ customer.CIF }}
+                        </td>
+                    
+                        <!-- Segment -->
+                        <td class="px-6 py-4">
+                    
+                            <span class="px-3 py-1 rounded-full text-sm font-medium" [class]="
+                                                    customer.segment === 'Priority'
+                                                      ? 'bg-amber-100 text-amber-700'
+                                                      : 'bg-emerald-100 text-emerald-700'
+                                                  ">
+                                {{ customer.segment }}
+                            </span>
+                    
+                        </td>
+                    
+                        <!-- Email -->
+                        <td class="px-6 py-4 text-gray-600">
+                            {{ customer.email }}
+                        </td>
+                    
+                        <!-- Phone -->
+                        <td class="px-6 py-4 text-gray-600">
+                            {{ customer.phone }}
+                        </td>
+                    
+                        <!-- Actions -->
+                        <td class="px-6 py-4">
+                    
+                            <a [routerLink]="['/customer', customer.CIF]"
+                                class="w-10 h-10 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-600 flex items-center justify-center transition duration-200"
+                                title="View Customer">
+                                <i class="pi pi-eye text-lg"></i>
+                            </a>
+                    
+                        </td>
+                    
+                    </tr>                       }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <!-- @if (!filteredCustomers().length) {
+
+        <div class="p-10 text-center">
+
+            <i class="pi pi-users text-5xl text-gray-300"></i>
+
+            <p class="text-gray-500 mt-4">
+                No customers found
+            </p>
+
+        </div>
+
+        } -->
+
+    </div>
+
+    </div>

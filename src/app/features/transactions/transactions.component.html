@@ -1,0 +1,453 @@
+
+<div class="min-h-screen bg-gray-100 p-6">
+
+    <!-- Header -->
+    
+    <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
+
+        <div>
+
+            <h1 class="text-2xl font-bold text-gray-800">
+                Account Transactions
+            </h1>
+
+            <p class="text-gray-500 mt-1">
+                Account ID: {{ currentAccount() }}
+            </p>
+
+        </div>
+
+    </div>
+    <div class="bg-white rounded-3xl shadow-sm p-5 mb-6 border border-gray-100">
+    
+        <!-- Header -->
+        <div class="mb-4">
+    
+            <h2 class="text-lg font-semibold text-gray-800">
+                Filter Transactions
+            </h2>
+    
+            <p class="text-sm text-gray-500">
+                Refine your search by date, type, or category
+            </p>
+    
+        </div>
+    
+        <!-- Date Range -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+    
+            <!-- From -->
+            <div>
+    
+                <label class="text-sm text-gray-600 mb-1 block">
+                    From Date
+                </label>
+    
+                <input type="date"
+                    class="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white outline-none" />
+    
+            </div>
+    
+            <!-- To -->
+            <div>
+    
+                <label class="text-sm text-gray-600 mb-1 block">
+                    To Date
+                </label>
+    
+                <input type="date"
+                    class="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white outline-none" />
+    
+            </div>
+            
+    
+        </div>
+        <div class="mb-4">
+        
+            <label class="text-sm text-gray-600 mb-2 block">
+                Transaction Type
+            </label>
+        
+            <div class="flex gap-3 flex-wrap">
+        
+                <button class="px-4 py-2 rounded-xl text-sm border bg-gray-50 text-gray-700 hover:bg-gray-100">
+                    All
+                </button>
+        
+                <button class="px-4 py-2 rounded-xl text-sm border bg-red-50 text-red-600 hover:bg-red-100">
+                    Debit
+                </button>
+        
+                <button class="px-4 py-2 rounded-xl text-sm border bg-emerald-50 text-emerald-600 hover:bg-emerald-100">
+                    Credit
+                </button>  </div>
+            </div>
+
+            <!-- Category -->
+            <div>
+          
+              <label class="text-sm text-gray-600 mb-2 block">
+                Category
+              </label>
+          
+              <div class="flex flex-wrap gap-2">
+          
+                <span class="px-4 py-2 rounded-xl text-sm bg-gray-50 border text-gray-700">
+                  All
+                </span>
+          
+                <span class="px-4 py-2 rounded-xl text-sm bg-gray-50 border text-gray-700">
+                  Groceries
+                </span>
+          
+                <span class="px-4 py-2 rounded-xl text-sm bg-gray-50 border text-gray-700">
+                  Bills
+                </span>
+          
+                <span class="px-4 py-2 rounded-xl text-sm bg-gray-50 border text-gray-700">
+                  Shopping
+                </span>
+          
+                <span class="px-4 py-2 rounded-xl text-sm bg-gray-50 border text-gray-700">
+                  Income
+                </span>
+          
+                <span class="px-4 py-2 rounded-xl text-sm bg-gray-50 border text-gray-700">
+                  Transport
+                </span>
+          
+              </div>
+          
+            </div>
+          
+          </div>
+        <div class="bg-white rounded-3xl shadow-sm p-5 mb-6 border border-gray-100">
+        
+            <!-- Header -->
+            <div class="mb-4">
+        
+                <h2 class="text-lg font-semibold text-gray-800">
+                    Sort Transactions
+                </h2>
+        
+                <p class="text-sm text-gray-500">
+                    Choose how to organize your transactions
+                </p>
+        
+            </div>
+        
+            <!-- Sort Options -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+                <!-- Sort by Date -->
+                <div>
+        
+                    <label class="text-sm text-gray-600 mb-2 block">
+                        Sort by Date
+                    </label>
+        
+                    <div class="flex gap-2">
+        
+                        <button class="flex-1 px-4 py-2.5 rounded-xl border bg-gray-50 text-gray-700 hover:bg-gray-100 text-sm">
+                            Newest First
+                        </button>
+        
+                        <button class="flex-1 px-4 py-2.5 rounded-xl border bg-gray-50 text-gray-700 hover:bg-gray-100 text-sm">
+                            Oldest First
+                        </button>
+        
+                    </div>
+        
+                </div>
+        
+                <!-- Sort by Amount -->
+                <div>
+        
+                    <label class="text-sm text-gray-600 mb-2 block">
+                        Sort by Amount
+                    </label>
+        
+                    <div class="flex gap-2">
+        
+                        <button class="flex-1 px-4 py-2.5 rounded-xl border bg-gray-50 text-gray-700 hover:bg-gray-100 text-sm">
+                            High → Low
+                        </button>
+        
+                        <button class="flex-1 px-4 py-2.5 rounded-xl border bg-gray-50 text-gray-700 hover:bg-gray-100 text-sm">
+                            Low → High
+                        </button>
+        
+                    </div>
+        
+                </div>
+        
+            </div>    </div>
+    
+
+    <!-- Empty State -->
+    @if (!accountTransactions().length) {
+
+    <div class="bg-white rounded-3xl p-10 text-center shadow-sm">
+
+        <i class="pi pi-inbox text-5xl text-gray-300"></i>
+
+        <p class="text-gray-500 mt-4">
+            No transactions found
+        </p>
+
+    </div>
+
+    }
+
+    @if (accountTransactions().length) {
+
+    <!-- Transactions Card -->
+    <div class="bg-white rounded-3xl shadow-sm overflow-hidden border border-gray-100">
+
+        <!-- Table -->
+        <div class="overflow-x-auto">
+
+            <table class="min-w-full">
+
+                <!-- Header -->
+                <thead class="bg-gray-50 border-b">
+                    <tr class="text-left text-gray-500 text-xs uppercase tracking-wider">
+
+                        <th class="px-6 py-4">Transaction</th>
+                        <th class="px-6 py-4">Category</th>
+                        <th class="px-6 py-4">Date</th>
+                        <th class="px-6 py-4">Amount</th>
+                        <th class="px-6 py-4">Status</th>
+
+                    </tr>
+                </thead>
+
+                <!-- Body -->
+                <tbody>
+
+                    @for (tx of accountTransactions(); track tx.id) {
+
+                    <tr class="border-b last:border-none hover:bg-gray-50 transition">
+
+                        <!-- Merchant -->
+                        <td class="px-6 py-4">
+
+                            <div class="flex items-center gap-3">
+
+                                <div
+                                    class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center">
+                                    <i class="pi pi-shopping-cart"></i>
+                                </div>
+
+                                <div>
+                                    <p class="font-semibold text-gray-800">
+                                        {{ tx.merchant }}
+                                    </p>
+                                    <p class="text-xs text-gray-400">
+                                        ID: {{ tx.id }}
+                                    </p>
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                        <!-- Category -->
+                        <td class="px-6 py-4">
+                            <span class="px-3 py-1 rounded-full text-xs bg-gray-100 text-gray-600">
+                                {{ tx.category }}
+                            </span>
+                        </td>
+
+                        <!-- Date -->
+                        <td class="px-6 py-4 text-gray-500">
+                            {{ tx.date }}
+                        </td>
+
+                        <!-- Amount -->
+                        <td class="px-6 py-4 font-semibold text-lg"
+                            [class]="tx.type === 'Debit' ? 'text-red-600' : 'text-emerald-600'">
+
+                            {{ tx.amount | number:'1.2-2' }} EGP
+
+                        </td>
+
+                        <!-- Type -->
+                        <td class="px-6 py-4">
+
+                            <span class="px-3 py-1 rounded-full text-xs font-medium" [class]="tx.type === 'Debit'
+                        ? 'bg-red-100 text-red-600'
+                        : 'bg-emerald-100 text-emerald-600'">
+
+                                {{ tx.type }}
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    }
+    @if (accountTransactions().length) {
+    
+    <!-- Header + Sorting -->
+    <div class="mb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    
+        <div>
+    
+            <h2 class="text-lg font-semibold text-gray-800">
+                Transactions
+            </h2>
+    
+            <p class="text-sm text-gray-500">
+                View and manage your account activity
+            </p>
+    
+        </div>
+    
+        <!-- Sorting UI -->
+        <div class="flex flex-wrap gap-2">
+    
+            <!-- Date Sort -->
+            <div class="flex items-center gap-2">
+    
+                <span class="text-xs text-gray-500">Date:</span>
+    
+                <button class="px-3 py-1.5 rounded-xl border bg-gray-50 text-gray-700 text-xs hover:bg-gray-100">
+                    Newest
+                </button>
+    
+                <button class="px-3 py-1.5 rounded-xl border bg-gray-50 text-gray-700 text-xs hover:bg-gray-100">
+                    Oldest
+                </button>
+    
+            </div>
+    
+            <!-- Divider -->
+            <div class="hidden md:block w-px bg-gray-200 mx-2"></div>
+    
+            <!-- Amount Sort -->
+            <div class="flex items-center gap-2">
+    
+                <span class="text-xs text-gray-500">Amount:</span>
+    
+                <button class="px-3 py-1.5 rounded-xl border bg-gray-50 text-gray-700 text-xs hover:bg-gray-100">
+                    High → Low
+                </button>
+    
+                <button class="px-3 py-1.5 rounded-xl border bg-gray-50 text-gray-700 text-xs hover:bg-gray-100">
+                    Low → High
+                </button>
+    
+            </div>
+    
+        </div>
+    
+    </div>
+    
+    <!-- Transactions Card -->
+    <div class="bg-white rounded-3xl shadow-sm overflow-hidden border border-gray-100">
+    
+        <div class="overflow-x-auto">
+    
+            <table class="min-w-full">
+    
+                <!-- Header -->
+                <thead class="bg-gray-50 border-b">
+                    <tr class="text-left text-gray-500 text-xs uppercase tracking-wider">
+    
+                        <th class="px-6 py-4">Transaction</th>
+                        <th class="px-6 py-4">Category</th>
+                        <th class="px-6 py-4">Date</th>
+                        <th class="px-6 py-4">Amount</th>
+                        <th class="px-6 py-4">Status</th>
+    
+                    </tr>
+                </thead>
+    
+                <!-- Body -->
+                <tbody>
+    
+                    @for (tx of accountTransactions(); track tx.id) {
+    
+                    <tr class="border-b last:border-none hover:bg-gray-50 transition">
+    
+                        <!-- Merchant -->
+                        <td class="px-6 py-4">
+    
+                            <div class="flex items-center gap-3">
+    
+                                <div
+                                    class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center">
+                                    <i class="pi pi-shopping-cart"></i>
+                                </div>
+    
+                                <div>
+                                    <p class="font-semibold text-gray-800">
+                                        {{ tx.merchant }}
+                                    </p>
+                                    <p class="text-xs text-gray-400">
+                                        ID: {{ tx.id }}
+                                    </p>
+                                </div>
+    
+                            </div>
+    
+                        </td>
+    
+                        <!-- Category -->
+                        <td class="px-6 py-4">
+                            <span class="px-3 py-1 rounded-full text-xs bg-gray-100 text-gray-600">
+                                {{ tx.category }}
+                            </span>
+                        </td>
+    
+                        <!-- Date -->
+                        <td class="px-6 py-4 text-gray-500">
+                            {{ tx.date }}
+                        </td>
+    
+                        <!-- Amount -->
+                        <td class="px-6 py-4 font-semibold text-lg"
+                            [class]="tx.type === 'Debit' ? 'text-red-600' : 'text-emerald-600'">
+    
+                            {{ tx.amount | number:'1.2-2' }} EGP
+    
+                        </td>
+    
+                        <!-- Type -->
+                        <td class="px-6 py-4">
+    
+                            <span class="px-3 py-1 rounded-full text-xs font-medium" [class]="tx.type === 'Debit'
+                                            ? 'bg-red-100 text-red-600'
+                                            : 'bg-emerald-100 text-emerald-600'">
+    
+                                {{ tx.type }}
+    
+                            </span>
+    
+                        </td>
+    
+                    </tr>
+    
+                    }
+    
+                </tbody>
+    
+            </table>
+    
+        </div>
+    
+    </div>       }
+
+    </div>

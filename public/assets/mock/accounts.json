@@ -1,0 +1,96 @@
+[
+  {
+    "id": "A1001",
+    "customerId": "C001",
+    "type": "Current",
+    "currency": "EGP",
+    "balance": 15320.55,
+    "iban": "EG380019000000000123456789",
+    "status": "Active"
+  },
+  {
+    "id": "A1002",
+    "customerId": "C001",
+    "type": "Savings",
+    "currency": "EGP",
+    "balance": 72000.0,
+    "iban": "EG380019000000000987654321",
+    "status": "Active"
+  },
+
+  {
+    "id": "A1003",
+    "customerId": "C002",
+    "type": "Current",
+    "currency": "EGP",
+    "balance": 5400.25,
+    "iban": "EG380019000000000112233445",
+    "status": "Active"
+  },
+  {
+    "id": "A1004",
+    "customerId": "C002",
+    "type": "Savings",
+    "currency": "EGP",
+    "balance": 180000.0,
+    "iban": "EG380019000000000556677889",
+    "status": "Active"
+  },
+
+  {
+    "id": "A1005",
+    "customerId": "C003",
+    "type": "Current",
+    "currency": "EGP",
+    "balance": 8900.75,
+    "iban": "EG380019000000000998877665",
+    "status": "Inactive"
+  },
+  {
+    "id": "A1006",
+    "customerId": "C003",
+    "type": "Savings",
+    "currency": "EGP",
+    "balance": 45000.0,
+    "iban": "EG380019000000000443322110",
+    "status": "Active"
+  },
+
+  {
+    "id": "A1007",
+    "customerId": "C004",
+    "type": "Current",
+    "currency": "EGP",
+    "balance": 22000.0,
+    "iban": "EG380019000000000667788990",
+    "status": "Active"
+  },
+  {
+    "id": "A1008",
+    "customerId": "C004",
+    "type": "Savings",
+    "currency": "EGP",
+    "balance": 950000.0,
+    "iban": "EG380019000000000223344556",
+    "status": "Active"
+  },
+
+  {
+    "id": "A1009",
+    "customerId": "C005",
+    "type": "Current",
+    "currency": "EGP",
+    "balance": 3100.0,
+    "iban": "EG380019000000000778899001",
+    "status": "Inactive"
+  },
+  {
+    "id": "A1010",
+    "customerId": "C005",
+    "type": "Savings",
+    "currency": "EGP",
+    "balance": 125000.0,
+    "iban": "EG380019000000000889900112",
+    "status": "Active"
+  }
+]
