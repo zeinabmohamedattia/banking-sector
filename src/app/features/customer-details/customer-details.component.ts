@@ -1,8 +1,8 @@
 import { CustomerService } from './../../core/services/customer.service';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Account } from '../../core/models/account.interface';
 import { DecimalPipe } from '@angular/common';
+import { Account } from '../../core/models/account.interface';
 
 @Component({
   selector: 'app-customer-details',
@@ -13,8 +13,8 @@ import { DecimalPipe } from '@angular/common';
 export class CustomerDetailsComponent implements OnInit{
   private readonly activatedRoute = inject(ActivatedRoute)
   private readonly customerService = inject(CustomerService)
-  currentUser = signal('')
-  userAccounts = signal<Account[]>([])
+  currentCustomer = signal('')
+  customerAccounts = signal<Account[]>([])
   
   ngOnInit(): void {
     this.getCurrentUserCif()
@@ -23,36 +23,23 @@ export class CustomerDetailsComponent implements OnInit{
   getCurrentUserCif(): void {
 
     this.activatedRoute.paramMap.subscribe(params => {
-      this.currentUser.set(params.get('cif') ?? '');
-      if (this.currentUser()) {
-        this.getUserAccounts(this.currentUser());
+      this.currentCustomer.set(params.get('cif') ?? '');
+      if (this.currentCustomer()) {
+        this.getCustomerAccounts(this.currentCustomer());
       }
     });
 
   }
 
-  getUserAccounts(cif: string): void {
+  getCustomerAccounts(cif: string): void {
     this.customerService.getCustomerAccounts(cif).subscribe({
       next: (res) => {
-        this.userAccounts.set(res);
-        console.log(this.userAccounts());
+        this.customerAccounts.set(res);
+        console.log(this.customerAccounts());
         
       }
     });
 
   }
 
-//   getCurrentUserCif() {
-
-//     this.activatedRoute.paramMap.subscribe(params => {
-//       this.currentUser.set(params.get('cif') ?? '')
-//     });
-//   }
-//   getUserAccounts() {
-//     this.customerService.getCustomerAccounts(this.currentUser).subscribe(() =>{
-//       next:(res)=>{
-//      this.userAccounts.set(res)
-//    }
-//  })
-//   }
 }

@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Customer } from '../models/customer.interface';
 import { Account } from '../models/account.interface';
-import { Transaction, TransactionType } from '../models/transaction.interface';
+import { Transaction } from '../models/transaction.interface';
+
 
 @Injectable({
   providedIn: 'root',
@@ -28,12 +29,12 @@ export class CustomerService{
         )
       );
   }
-  getAccountTransactions(accId: string): Observable<Transaction[]> {
+  getAccountById(accountId: string): Observable<Account | undefined> {
     return this.httpClient
-      .get<Transaction[]>('assets/mock/transactions.json')
+      .get<Account[]>('assets/mock/accounts.json')
       .pipe(
-        map(transactions =>
-          transactions.filter(t => t.accountId === accId)
+        map(accounts =>
+          accounts.find(acc => acc.id === accountId)
         )
       );
   }

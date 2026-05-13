@@ -1,453 +1,272 @@
+<div class="min-h-screen bg-gray-50 p-4 md:p-8">
+  
+    <!-- Top Actions Bar -->
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-10">
 
-<div class="min-h-screen bg-gray-100 p-6">
-
-    <!-- Header -->
-    
-    <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
-
-        <div>
-
-            <h1 class="text-2xl font-bold text-gray-800">
-                Account Transactions
-            </h1>
-
-            <p class="text-gray-500 mt-1">
-                Account ID: {{ currentAccount() }}
-            </p>
-
-        </div>
-
-    </div>
-    <div class="bg-white rounded-3xl shadow-sm p-5 mb-6 border border-gray-100">
-    
-        <!-- Header -->
-        <div class="mb-4">
-    
-            <h2 class="text-lg font-semibold text-gray-800">
-                Filter Transactions
-            </h2>
-    
-            <p class="text-sm text-gray-500">
-                Refine your search by date, type, or category
-            </p>
-    
-        </div>
-    
-        <!-- Date Range -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-    
-            <!-- From -->
-            <div>
-    
-                <label class="text-sm text-gray-600 mb-1 block">
-                    From Date
-                </label>
-    
-                <input type="date"
-                    class="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white outline-none" />
-    
-            </div>
-    
-            <!-- To -->
-            <div>
-    
-                <label class="text-sm text-gray-600 mb-1 block">
-                    To Date
-                </label>
-    
-                <input type="date"
-                    class="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white outline-none" />
-    
-            </div>
-            
-    
-        </div>
-        <div class="mb-4">
-        
-            <label class="text-sm text-gray-600 mb-2 block">
-                Transaction Type
-            </label>
-        
-            <div class="flex gap-3 flex-wrap">
-        
-                <button class="px-4 py-2 rounded-xl text-sm border bg-gray-50 text-gray-700 hover:bg-gray-100">
-                    All
-                </button>
-        
-                <button class="px-4 py-2 rounded-xl text-sm border bg-red-50 text-red-600 hover:bg-red-100">
-                    Debit
-                </button>
-        
-                <button class="px-4 py-2 rounded-xl text-sm border bg-emerald-50 text-emerald-600 hover:bg-emerald-100">
-                    Credit
-                </button>  </div>
-            </div>
-
-            <!-- Category -->
-            <div>
-          
-              <label class="text-sm text-gray-600 mb-2 block">
-                Category
-              </label>
-          
-              <div class="flex flex-wrap gap-2">
-          
-                <span class="px-4 py-2 rounded-xl text-sm bg-gray-50 border text-gray-700">
-                  All
-                </span>
-          
-                <span class="px-4 py-2 rounded-xl text-sm bg-gray-50 border text-gray-700">
-                  Groceries
-                </span>
-          
-                <span class="px-4 py-2 rounded-xl text-sm bg-gray-50 border text-gray-700">
-                  Bills
-                </span>
-          
-                <span class="px-4 py-2 rounded-xl text-sm bg-gray-50 border text-gray-700">
-                  Shopping
-                </span>
-          
-                <span class="px-4 py-2 rounded-xl text-sm bg-gray-50 border text-gray-700">
-                  Income
-                </span>
-          
-                <span class="px-4 py-2 rounded-xl text-sm bg-gray-50 border text-gray-700">
-                  Transport
-                </span>
-          
-              </div>
-          
-            </div>
-          
-          </div>
-        <div class="bg-white rounded-3xl shadow-sm p-5 mb-6 border border-gray-100">
-        
-            <!-- Header -->
-            <div class="mb-4">
-        
-                <h2 class="text-lg font-semibold text-gray-800">
-                    Sort Transactions
-                </h2>
-        
-                <p class="text-sm text-gray-500">
-                    Choose how to organize your transactions
+        <div class="flex flex-col md:flex-row md:items-center gap-8 w-full lg:w-auto">
+            <div class="space-y-1">
+                <h1 class="text-3xl font-black text-gray-900 tracking-tight">Account Transactions</h1>
+                <p class="text-gray-400 text-sm font-medium">
+                    Activity overview for
+                    <span class="text-indigo-600 font-bold bg-indigo-50 px-2 py-0.5 rounded">#{{ currentAccountId()
+                        }}</span>
                 </p>
-        
             </div>
-        
-            <!-- Sort Options -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        
-                <!-- Sort by Date -->
-                <div>
-        
-                    <label class="text-sm text-gray-600 mb-2 block">
-                        Sort by Date
-                    </label>
-        
-                    <div class="flex gap-2">
-        
-                        <button class="flex-1 px-4 py-2.5 rounded-xl border bg-gray-50 text-gray-700 hover:bg-gray-100 text-sm">
-                            Newest First
-                        </button>
-        
-                        <button class="flex-1 px-4 py-2.5 rounded-xl border bg-gray-50 text-gray-700 hover:bg-gray-100 text-sm">
-                            Oldest First
-                        </button>
-        
+
+            @if (currentAccount(); as acc) {
+            <div
+                class="flex flex-wrap items-center gap-2 bg-white p-2 pr-6 rounded-[2rem] border border-gray-100 shadow-xl shadow-gray-200/40">
+
+                <div class="flex items-center divide-x divide-gray-100">
+                    <div class="px-6">
+                        <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-0.5">Total
+                            Balance</span>
+                        <span class="text-lg font-mono font-black text-gray-900">
+                            {{ acc.balance | number:'1.2-2' }} <span class="text-indigo-600 text-xs ml-0.5">{{
+                                acc.currency
+                                }}</span>
+                        </span>
                     </div>
-        
-                </div>
-        
-                <!-- Sort by Amount -->
-                <div>
-        
-                    <label class="text-sm text-gray-600 mb-2 block">
-                        Sort by Amount
-                    </label>
-        
-                    <div class="flex gap-2">
-        
-                        <button class="flex-1 px-4 py-2.5 rounded-xl border bg-gray-50 text-gray-700 hover:bg-gray-100 text-sm">
-                            High → Low
-                        </button>
-        
-                        <button class="flex-1 px-4 py-2.5 rounded-xl border bg-gray-50 text-gray-700 hover:bg-gray-100 text-sm">
-                            Low → High
-                        </button>
-        
+
+                    <div class="px-6 hidden sm:block">
+                        <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-1">Account
+                            Status</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold text-gray-700">{{ acc.type }}</span>
+                            <span
+                                [class]="acc.status === 'Active' ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'"
+                                class="px-2 py-0.5 rounded-lg text-[9px] font-black uppercase border border-current/10">
+                                {{ acc.status }}
+                            </span>
+                        </div>
                     </div>
-        
+
+                    <div class="px-6 hidden md:block">
+                        <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-0.5">IBAN
+                            Number</span>
+                        <div class="flex items-center gap-2 text-gray-500">
+                            <i class="pi pi-lock text-[10px]"></i>
+                            <span class="text-xs font-mono tracking-tighter">{{ acc.iban }}</span>
+                        </div>
+                    </div>
                 </div>
-        
-            </div>    </div>
-    
-
-    <!-- Empty State -->
-    @if (!accountTransactions().length) {
-
-    <div class="bg-white rounded-3xl p-10 text-center shadow-sm">
-
-        <i class="pi pi-inbox text-5xl text-gray-300"></i>
-
-        <p class="text-gray-500 mt-4">
-            No transactions found
-        </p>
-
-    </div>
-
-    }
-
-    @if (accountTransactions().length) {
-
-    <!-- Transactions Card -->
-    <div class="bg-white rounded-3xl shadow-sm overflow-hidden border border-gray-100">
-
-        <!-- Table -->
-        <div class="overflow-x-auto">
-
-            <table class="min-w-full">
-
-                <!-- Header -->
-                <thead class="bg-gray-50 border-b">
-                    <tr class="text-left text-gray-500 text-xs uppercase tracking-wider">
-
-                        <th class="px-6 py-4">Transaction</th>
-                        <th class="px-6 py-4">Category</th>
-                        <th class="px-6 py-4">Date</th>
-                        <th class="px-6 py-4">Amount</th>
-                        <th class="px-6 py-4">Status</th>
-
-                    </tr>
-                </thead>
-
-                <!-- Body -->
-                <tbody>
-
-                    @for (tx of accountTransactions(); track tx.id) {
-
-                    <tr class="border-b last:border-none hover:bg-gray-50 transition">
-
-                        <!-- Merchant -->
-                        <td class="px-6 py-4">
-
-                            <div class="flex items-center gap-3">
-
-                                <div
-                                    class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center">
-                                    <i class="pi pi-shopping-cart"></i>
-                                </div>
-
-                                <div>
-                                    <p class="font-semibold text-gray-800">
-                                        {{ tx.merchant }}
-                                    </p>
-                                    <p class="text-xs text-gray-400">
-                                        ID: {{ tx.id }}
-                                    </p>
-                                </div>
-
-                            </div>
-
-                        </td>
-
-                        <!-- Category -->
-                        <td class="px-6 py-4">
-                            <span class="px-3 py-1 rounded-full text-xs bg-gray-100 text-gray-600">
-                                {{ tx.category }}
-                            </span>
-                        </td>
-
-                        <!-- Date -->
-                        <td class="px-6 py-4 text-gray-500">
-                            {{ tx.date }}
-                        </td>
-
-                        <!-- Amount -->
-                        <td class="px-6 py-4 font-semibold text-lg"
-                            [class]="tx.type === 'Debit' ? 'text-red-600' : 'text-emerald-600'">
-
-                            {{ tx.amount | number:'1.2-2' }} EGP
-
-                        </td>
-
-                        <!-- Type -->
-                        <td class="px-6 py-4">
-
-                            <span class="px-3 py-1 rounded-full text-xs font-medium" [class]="tx.type === 'Debit'
-                        ? 'bg-red-100 text-red-600'
-                        : 'bg-emerald-100 text-emerald-600'">
-
-                                {{ tx.type }}
-
-                            </span>
-
-                        </td>
-
-                    </tr>
-
-                    }
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </div>
-
-    }
-    @if (accountTransactions().length) {
-    
-    <!-- Header + Sorting -->
-    <div class="mb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-    
-        <div>
-    
-            <h2 class="text-lg font-semibold text-gray-800">
-                Transactions
-            </h2>
-    
-            <p class="text-sm text-gray-500">
-                View and manage your account activity
-            </p>
-    
-        </div>
-    
-        <!-- Sorting UI -->
-        <div class="flex flex-wrap gap-2">
-    
-            <!-- Date Sort -->
-            <div class="flex items-center gap-2">
-    
-                <span class="text-xs text-gray-500">Date:</span>
-    
-                <button class="px-3 py-1.5 rounded-xl border bg-gray-50 text-gray-700 text-xs hover:bg-gray-100">
-                    Newest
-                </button>
-    
-                <button class="px-3 py-1.5 rounded-xl border bg-gray-50 text-gray-700 text-xs hover:bg-gray-100">
-                    Oldest
-                </button>
-    
             </div>
-    
-            <!-- Divider -->
-            <div class="hidden md:block w-px bg-gray-200 mx-2"></div>
-    
-            <!-- Amount Sort -->
-            <div class="flex items-center gap-2">
-    
-                <span class="text-xs text-gray-500">Amount:</span>
-    
-                <button class="px-3 py-1.5 rounded-xl border bg-gray-50 text-gray-700 text-xs hover:bg-gray-100">
-                    High → Low
-                </button>
-    
-                <button class="px-3 py-1.5 rounded-xl border bg-gray-50 text-gray-700 text-xs hover:bg-gray-100">
-                    Low → High
-                </button>
-    
-            </div>
-    
+            }
         </div>
-    
-    </div>
-    
-    <!-- Transactions Card -->
-    <div class="bg-white rounded-3xl shadow-sm overflow-hidden border border-gray-100">
-    
-        <div class="overflow-x-auto">
-    
-            <table class="min-w-full">
-    
-                <!-- Header -->
-                <thead class="bg-gray-50 border-b">
-                    <tr class="text-left text-gray-500 text-xs uppercase tracking-wider">
-    
-                        <th class="px-6 py-4">Transaction</th>
-                        <th class="px-6 py-4">Category</th>
-                        <th class="px-6 py-4">Date</th>
-                        <th class="px-6 py-4">Amount</th>
-                        <th class="px-6 py-4">Status</th>
-    
-                    </tr>
-                </thead>
-    
-                <!-- Body -->
-                <tbody>
-    
-                    @for (tx of accountTransactions(); track tx.id) {
-    
-                    <tr class="border-b last:border-none hover:bg-gray-50 transition">
-    
-                        <!-- Merchant -->
-                        <td class="px-6 py-4">
-    
-                            <div class="flex items-center gap-3">
-    
-                                <div
-                                    class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center">
-                                    <i class="pi pi-shopping-cart"></i>
-                                </div>
-    
-                                <div>
-                                    <p class="font-semibold text-gray-800">
-                                        {{ tx.merchant }}
-                                    </p>
-                                    <p class="text-xs text-gray-400">
-                                        ID: {{ tx.id }}
-                                    </p>
-                                </div>
-    
-                            </div>
-    
-                        </td>
-    
-                        <!-- Category -->
-                        <td class="px-6 py-4">
-                            <span class="px-3 py-1 rounded-full text-xs bg-gray-100 text-gray-600">
-                                {{ tx.category }}
-                            </span>
-                        </td>
-    
-                        <!-- Date -->
-                        <td class="px-6 py-4 text-gray-500">
-                            {{ tx.date }}
-                        </td>
-    
-                        <!-- Amount -->
-                        <td class="px-6 py-4 font-semibold text-lg"
-                            [class]="tx.type === 'Debit' ? 'text-red-600' : 'text-emerald-600'">
-    
-                            {{ tx.amount | number:'1.2-2' }} EGP
-    
-                        </td>
-    
-                        <!-- Type -->
-                        <td class="px-6 py-4">
-    
-                            <span class="px-3 py-1 rounded-full text-xs font-medium" [class]="tx.type === 'Debit'
-                                            ? 'bg-red-100 text-red-600'
-                                            : 'bg-emerald-100 text-emerald-600'">
-    
-                                {{ tx.type }}
-    
-                            </span>
-    
-                        </td>
-    
-                    </tr>
-    
-                    }
-    
-                </tbody>
-    
-            </table>
-    
-        </div>
-    
-    </div>       }
 
+        <div class="flex gap-3 w-full md:w-auto shrink-0">
+            <button (click)="exportCsv()"
+                class="flex-1 md:flex-none px-6 py-3 bg-white border border-gray-200 rounded-2xl text-sm font-bold text-gray-600 shadow-sm hover:bg-gray-50 transition-all active:scale-95 flex items-center justify-center gap-2">
+                <i class="pi pi-cloud-download  group-hover:bounce"></i>
+
+                Export
+            </button>
+            <button (click)="showCreateModal()"
+                class="flex-1 md:flex-none px-6 py-3 bg-indigo-600 rounded-2xl text-sm font-bold text-white shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition-all active:scale-95 flex items-center justify-center gap-2">
+                <i class="pi pi-plus"></i>
+                New Transaction
+            </button>
+        </div>
     </div>
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8">
+
+        <!-- Sidebar Filters -->
+        <aside class="lg:col-span-1 space-y-6">
+            <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm sticky top-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="font-bold text-gray-800 flex items-center gap-2">
+                        <i class="pi pi-sliders-h text-gray-400" style="font-size: 1rem"></i>
+                        Quick Filters
+                    </h2>
+
+                    <button (click)="updateFilters({fromDate:'', toDate:'', type:'', category:''})"
+                        class="text-sm text-indigo-600 hover:underline font-semibold">Reset</button>
+                </div>
+
+                <!-- Date Range -->
+                <div class="space-y-4 mb-8">
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2 block">Start
+                            Date</label>
+                        <input type="date" [value]="filters().fromDate"
+                            (input)="updateFilters({fromDate: $any($event.target).value})"
+                            class="w-full bg-gray-50 border-gray-100 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2 block">End
+                            Date</label>
+                        <input type="date" [value]="filters().toDate"
+                            (input)="updateFilters({toDate: $any($event.target).value})"
+                            class="w-full bg-gray-50 border-gray-100 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all">
+                    </div>
+                </div>
+
+                <!-- Type Selection -->
+                <div class="mb-8">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-3 block">Transaction
+                        Type</label>
+                    <div class="flex bg-gray-100 p-1 rounded-2xl gap-1">
+                        <button (click)="updateFilters({type: ''})"
+                            [class]="!filters().type ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500'"
+                            class="flex-1 py-2 text-xs font-bold rounded-xl transition-all">All</button>
+                        @for (t of types; track t.label) {
+                        <button (click)="updateFilters({type: t.label})"
+                            [class]="filters().type === t.label ? 'bg-white shadow-sm text-' + t.color + '-600' : 'text-gray-500'"
+                            class="flex-1 py-2 text-xs font-bold rounded-xl transition-all">{{t.label}}</button>
+                        }
+                    </div>
+                </div>
+
+                <!-- Category Chips -->
+                <!-- <div>
+                    <label
+                        class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-3 block">Category</label>
+                    <div class="flex flex-wrap gap-2">
+                        <button (click)="updateFilters({category: ''})"
+                            [class]="!filters().category ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-600 hover:bg-gray-100'"
+                            class="px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all">All</button>
+
+                        @for (cat of categories; track cat.label) {
+                        <button (click)="updateFilters({category: cat.label})"
+                            [class]="filters().category === cat.label ? cat.class + ' ring-2 ring-offset-1 ring-current' : 'bg-gray-50 text-gray-600 hover:bg-gray-100'"
+                            class="px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all">{{cat.label}}</button>
+                        }
+                    </div>
+                </div> -->
+
+
+                <div class="flex flex-wrap gap-2">
+                    <!-- زر الكل -->
+                    <button (click)="updateFilters({ category: '' })"
+                        class="px-4 py-2 rounded-xl text-sm font-bold transition-all" [class]="!filters().category 
+                                                 ? 'bg-gray-900 text-white shadow-md' 
+                                                 : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'">
+                        All
+                    </button>
+
+
+                    @for (catName of categoryOptions(); track catName) {
+                    <button (click)="updateFilters({ category: catName })"
+                        class="px-4 py-2 rounded-xl text-xs font-bold transition-all" [class]="filters().category === catName 
+                                                 ? 'bg-gray-900 text-white shadow-md' 
+                                                 : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'">
+                        {{ catName }}
+                    </button>
+                    }
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main List -->
+        <main class="lg:col-span-3 space-y-4">
+
+            <!-- Table Heading / Sorting -->
+            <div class="flex items-center justify-between px-2">
+                <h5 class="text-sm font-bold text-gray-400 uppercase tracking-widest">Transactions List</h5>
+                <!-- <div class="flex gap-4">
+                    <button (click)="setSort('date')"
+                        class="text-xs font-bold flex items-center gap-1 transition-colors"
+                        [class.text-indigo-600]="sortField() === 'date'">
+                        Date
+                        <i [class]="sortField() === 'date' ? (sortDir() === 'asc' ? 'pi pi-sort-amount-up' : 'pi pi-sort-amount-down') : 'pi pi-sort-alt'"
+                            style="font-size: 0.7rem"></i> </button>
+                    <button (click)="setSort('amount')"
+                        class="text-xs font-bold flex items-center gap-1 transition-colors"
+                        [class.text-indigo-600]="sortField() === 'amount'">
+                        amount
+                        <i [class]="sortField() === 'amount' ? (sortDir() === 'asc' ? 'pi pi-sort-amount-up' : 'pi pi-sort-amount-down') : 'pi pi-sort-alt'"
+                            style="font-size: 0.7rem"></i> </button>
+                </div> -->
+            </div>
+
+            <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+
+                        <thead class="bg-gray-50/50 border-b border-gray-50">
+                            <tr class="text-left">
+                                <!-- Merchant Column -->
+                                <th class="px-8 py-5 text-[12px] font-black text-gray-400 uppercase tracking-widest">
+                                    Description
+                                </th>
+
+                                <!-- Category Column -->
+                                <th class="px-6 py-5 text-[12px] font-black text-gray-400 uppercase tracking-widest">
+                                    Category
+                                </th>
+
+                                <!-- Date Column (Sortable) -->
+                                <th (click)="setSort('date')"
+                                    class="px-6 py-5 text-[12px] font-black uppercase tracking-widest cursor-pointer hover:bg-gray-100 transition-colors group">
+                                    <div class="flex items-center gap-2"
+                                        [class.text-indigo-600]="sortField() === 'date'">
+                                        <span>Date</span>
+                                        <i [class]="sortField() === 'date' 
+                                                                    ? (sortDir() === 'asc' ? 'pi pi-sort-amount-up' : 'pi pi-sort-amount-down') 
+                                                                    : 'pi pi-sort-alt text-gray-700'"
+                                            style="font-size: 0.75rem"></i>
+                                    </div>
+                                </th>
+
+                                <!-- Amount Column (Sortable) -->
+                                <th (click)="setSort('amount')"
+                                    class="px-8 py-5 text-[12px] font-black uppercase tracking-widest cursor-pointer hover:bg-gray-100 transition-colors group text-right">
+                                    <div class="flex items-center justify-end gap-2"
+                                        [class.text-indigo-600]="sortField() === 'amount'">
+                                        <span>Amount</span>
+                                        <i [class]="sortField() === 'amount' 
+                                                                    ? (sortDir() === 'asc' ? 'pi pi-sort-amount-up' : 'pi pi-sort-amount-down') 
+                                                                    : 'pi pi-sort-alt text-gray-700'"
+                                            style="font-size: 0.75rem"></i>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-50">
+                            @for (tx of filteredTransactions(); track tx.id) {
+                            <tr class="hover:bg-indigo-50/30 transition-colors group">
+                                <td class="px-8 py-5">
+                                    <div class="flex items-center gap-4">
+                                        <div
+                                            class="w-10 h-10 rounded-2xl bg-gray-100 flex items-center justify-center text-gray-500 group-hover:bg-white group-hover:shadow-sm transition-all font-black text-sm">
+                                            {{tx.merchant[0]}}
+                                        </div>
+                                        <span class="font-bold text-sm  text-gray-800">{{tx.merchant}}</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-5">
+                                    <span
+                                        class="px-2.5 py-1 rounded-md bg-gray-100 text-gray-500 text-[10px] font-black uppercase tracking-widest border border-gray-200">
+                                        {{ tx.category }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-5 text-sm text-gray-400  ">{{tx.date |
+                                    date:'mediumDate'}}</td>
+                                <td class="px-8 py-5 text-right">
+                                    <span [class]="tx.type === 'Debit' ? 'text-red-500' : 'text-emerald-500'"
+                                        class=" text-sm tracking-tight">
+                                        {{tx.type === 'Debit' ? '-' : '+'}}{{tx.amount | number:'1.2-2'}}
+                                        <span class="text-[12px] opacity-50 ml-1">EGP</span>
+                                    </span>
+                                </td>
+                            </tr>
+                            } @empty {
+                            <tr>
+                                <td colspan="4" class="px-6 py-32 text-center">
+                                    <div class="flex flex-col items-center gap-3">
+                                        <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center">
+                                            <i class="pi pi-inbox text-gray-200" style="font-size: 2rem"></i>
+                                        </div>
+                                        <p class="text-gray-400 font-bold">No transactions found for this selection</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

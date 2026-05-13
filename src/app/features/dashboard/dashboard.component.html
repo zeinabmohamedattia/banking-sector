@@ -1,191 +1,158 @@
-<!-- dashboard.component.html -->
 
-<div class="min-h-screen bg-gray-100 px-4 lg:p-6">
 
-    <!-- Header -->
-    <div class="mb-6">
+<div class="min-h-screen bg-gray-50 p-4 md:p-8">
 
-        <h1 class="text-3xl font-bold text-gray-800">
-            Customers Dashboard
-        </h1>
+    <!-- Header Section -->
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+        <div>
+            <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Customers Dashboard</h1>
+            <p class="text-gray-500 font-medium mt-1">Manage and monitor customer accounts and segments</p>
+        </div>
 
-        <p class="text-gray-500 mt-2">
-            Manage and monitor customer accounts
-        </p>
-
+        <!-- Search Bar Integrated in Header -->
+        <!-- <div class="relative w-full md:w-96 group">
+            <i
+                class="pi pi-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 transition-colors"></i>
+            <input type="text" placeholder="Search by name, CIF or National ID..."
+                class="w-full pl-12 pr-4 py-3 rounded-2xl border-none bg-white shadow-sm ring-1 ring-gray-200 focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+                (input)="searchCustomer($event)" />
+        </div> -->
     </div>
 
-    <!-- Stats -->
-     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <!-- Stats Cards -->
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
 
-        <div class="bg-white rounded-3xl p-5 shadow-sm border border-gray-100">
-            <p class="text-gray-500 text-sm">Total Customers</p>
-
-            <h2 class="text-3xl font-bold text-indigo-600 mt-2">
-                {{ customers().length }}
-            </h2>
+        <!-- Total Customers -->
+        <div
+            class="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100 flex items-center gap-5 group hover:shadow-md transition-all">
+            <div
+                class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center transition-colors group-hover:bg-indigo-600 group-hover:text-white">
+                <i class="pi pi-users text-xl"></i>
+            </div>
+            <div>
+                <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Total Customers</p>
+                <h2 class="text-3xl font-black text-gray-900 mt-1">{{ customers().length }}</h2>
+            </div>
         </div>
 
-        <div class="bg-white rounded-3xl p-5 shadow-sm border border-gray-100">
-            <p class="text-gray-500 text-sm">Priority Clients</p>
-
-            <h2 class="text-3xl font-bold text-amber-500 mt-2">
-                {{ priorityCustomersCount() }}
-            </h2>
+        <!-- Priority Clients -->
+        <div
+            class="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100 flex items-center gap-5 group hover:shadow-md transition-all">
+            <div
+                class="w-14 h-14 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center transition-colors group-hover:bg-amber-500 group-hover:text-white">
+                <i class="pi pi-star text-xl"></i>
+            </div>
+            <div>
+                <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Priority Clients</p>
+                <h2 class="text-3xl font-black text-gray-900 mt-1">{{ priorityCustomersCount() }}</h2>
+            </div>
         </div>
 
-        <div class="bg-white rounded-3xl p-5 shadow-sm border border-gray-100">
-            <p class="text-gray-500 text-sm">Retail Clients</p>
-
-            <h2 class="text-3xl font-bold text-emerald-500 mt-2">
-                {{ retailCustomersCount() }}
-            </h2>
+        <!-- Retail Clients -->
+        <div
+            class="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100 flex items-center gap-5 group hover:shadow-md transition-all">
+            <div
+                class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-500 flex items-center justify-center transition-colors group-hover:bg-emerald-500 group-hover:text-white">
+                <i class="pi pi-id-card text-xl"></i>
+            </div>
+            <div>
+                <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Retail Clients</p>
+                <h2 class="text-3xl font-black text-gray-900 mt-1">{{ retailCustomersCount() }}</h2>
+            </div>
         </div>
+    </div>
 
-    </div> 
-
-    <!-- Search -->
-    <!-- <div class="bg-white rounded-3xl p-4 shadow-sm border border-gray-100 mb-6">
-
-        <div class="relative">
-
-            <i class="pi pi-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-
-            <input type="text" placeholder="Search customers..."
-                class="w-full pl-12 pr-4 py-3 rounded-2xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 outline-none transition"
-                (input)="searchCustomer($event)" />
-
-        </div>
-
-    </div> -->
-
-    <!-- Customers Table -->
-    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
-
+    <!-- Customers Table Section -->
+    <div class="max-w-7xl mx-auto bg-white rounded-[2.5rem] shadow-sm border border-gray-100 overflow-hidden">
         <div class="overflow-x-auto">
-
-            <table class="w-full">
-
-                <thead class="bg-gray-50 border-b border-gray-100">
-
-                    <tr>
-
-                        <th class="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                            Customer
+            <table class="w-full text-left">
+                <thead>
+                    <tr class="bg-gray-50/50 border-b border-gray-50">
+                        <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">Customer
+                            Profile</th>
+                        <th class="px-6 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">CIF</th>
+                        <th class="px-6 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">Segment
                         </th>
-
-                        <th class="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                            CIF
-                        </th>
-
-                        <th class="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                            Segment
-                        </th>
-
-                        <th class="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                            Email
-                        </th>
-
-                        <th class="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                            Phone
-                        </th>
-
+                        <th class="px-6 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">Contact
+                            Info</th>
+                        <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest text-right">
+                            Action</th>
                     </tr>
-
                 </thead>
 
-                <tbody>
-
+                <tbody class="divide-y divide-gray-50">
                     @for (customer of customers(); track customer.CIF) {
-                    
-                    <tr class="border-b border-gray-100 hover:bg-gray-50 transition">
-                    
-                        <!-- Customer -->
-                        <td class="px-6 py-4">
-                    
-                            <div class="flex items-center gap-3">
-                    
-                                <div class="w-11 h-11 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold">
+                    <tr [routerLink]="['/customer', customer.CIF]"
+                        class="hover:bg-indigo-50/30 transition-all group cursor-pointer">
+
+                        <!-- Customer Profile -->
+                        <td class="px-8 py-5">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-11 h-11 rounded-2xl bg-gray-100 flex items-center justify-center text-indigo-600 font-black text-sm group-hover:bg-white transition-colors">
                                     {{ customer.name.charAt(0) }}
                                 </div>
-                    
                                 <div>
-                    
-                                    <h3 class="font-semibold text-gray-800">
+                                    <h3 class="font-bold text-gray-800 group-hover:text-indigo-600 transition-colors">
                                         {{ customer.name }}
                                     </h3>
-                    
-                                    <p class="text-sm text-gray-500">
-                                        {{ customer.nationalId }}
+                                    <p class="text-xs text-gray-400 font-medium">
+                                        ID: {{ customer.nationalId }}
                                     </p>
-                    
                                 </div>
-                    
                             </div>
-                    
                         </td>
-                    
+
                         <!-- CIF -->
-                        <td class="px-6 py-4 text-gray-700 font-medium">
-                            {{ customer.CIF }}
+                        <td class="px-6 py-5">
+                            <span class="text-sm font-bold text-gray-600">#{{ customer.CIF }}</span>
                         </td>
-                    
-                        <!-- Segment -->
-                        <td class="px-6 py-4">
-                    
-                            <span class="px-3 py-1 rounded-full text-sm font-medium" [class]="
-                                                    customer.segment === 'Priority'
-                                                      ? 'bg-amber-100 text-amber-700'
-                                                      : 'bg-emerald-100 text-emerald-700'
-                                                  ">
+
+                        <!-- Segment Tag -->
+                        <td class="px-6 py-5">
+                            <span class="px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider" [class]="customer.segment === 'Priority' 
+                                            ? 'bg-amber-100 text-amber-700' 
+                                            : 'bg-emerald-100 text-emerald-700'">
                                 {{ customer.segment }}
                             </span>
-                    
                         </td>
-                    
-                        <!-- Email -->
-                        <td class="px-6 py-4 text-gray-600">
-                            {{ customer.email }}
-                        </td>
-                    
-                        <!-- Phone -->
-                        <td class="px-6 py-4 text-gray-600">
-                            {{ customer.phone }}
-                        </td>
-                    
-                        <!-- Actions -->
-                        <td class="px-6 py-4">
-                    
-                            <a [routerLink]="['/customer', customer.CIF]"
-                                class="w-10 h-10 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-600 flex items-center justify-center transition duration-200"
-                                title="View Customer">
-                                <i class="pi pi-eye text-lg"></i>
-                            </a>
-                    
-                        </td>
-                    
-                    </tr>                       }
 
+                        <!-- Contact Info (Merged) -->
+                        <td class="px-6 py-5">
+                            <div class="flex flex-col gap-0.5">
+                                <span class="text-sm font-semibold text-gray-700">{{ customer.email }}</span>
+                                <span class="text-xs text-gray-400 font-medium italic">{{ customer.phone }}</span>
+                            </div>
+                        </td>
+
+                        <!-- Action Button -->
+                        <td class="px-8 py-5 text-right">
+                            <button
+                                class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gray-50 text-gray-400 group-hover:bg-indigo-600 group-hover:text-white transition-all">
+                                <i class="pi pi-chevron-right text-xs"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    } @empty {
+                    <tr>
+                        <td colspan="5" class="px-6 py-24 text-center">
+                            <div class="flex flex-col items-center gap-3">
+                                <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mb-2">
+                                    <i class="pi pi-users text-gray-200 text-4xl"></i>
+                                </div>
+                                <h3 class="text-gray-400 font-black uppercase tracking-widest text-sm">No Customers
+                                    Found</h3>
+                                <p class="text-gray-400 text-xs">Try adjusting your search terms</p>
+                            </div>
+                        </td>
+                    </tr>
+                    }
                 </tbody>
-
             </table>
-
         </div>
-
-        <!-- @if (!filteredCustomers().length) {
-
-        <div class="p-10 text-center">
-
-            <i class="pi pi-users text-5xl text-gray-300"></i>
-
-            <p class="text-gray-500 mt-4">
-                No customers found
-            </p>
-
-        </div>
-
-        } -->
-
     </div>
+</div>
+<!-- dashboard.component.html -->
 
-    </div>
+
+  
