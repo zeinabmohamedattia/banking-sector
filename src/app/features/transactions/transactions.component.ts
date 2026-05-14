@@ -12,6 +12,7 @@ import { Account } from '../../core/models/account.interface';
 import { PaginationHelper } from '../../shared/helpers/pagination.helper';
 import { MessageService } from 'primeng/api';
 import { SkeletonTableComponent } from "../../shared/components/skeleton-table/skeleton-table.component";
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-transactions',
@@ -96,7 +97,6 @@ export class TransactionsComponent implements OnInit {
       next: (res) => {
         this.currentAccount.set(res)
         this.currentBalance.set(res?.balance)
-        console.log(this.currentAccount());
 
       },
       error: (err) => console.error('Error:', err)
@@ -115,7 +115,11 @@ export class TransactionsComponent implements OnInit {
     this.isLoading.set(true);
     this.errorMessage.set(null);
     this.transactionsService.getAccountTransactions(id)
-      .subscribe({
+      // .pipe(
+      // Simulate network latency to demonstrate skeleton loader and improve UX
+    //   delay(500)
+    // )
+    .subscribe({
         next: (res) => {
           this.allTransactions.set(res)
           this.isLoading.set(false);

@@ -37,7 +37,6 @@ export class DashboardComponent implements OnInit {
       .subscribe({
       next: (response) => {
         this.customers.set(response);
-        console.log(response);
         this.isLoading.set(false)
 
       },

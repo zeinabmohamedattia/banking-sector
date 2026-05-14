@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
+import { delay, of } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -51,9 +52,7 @@ export class LoginComponent {
     }
     else {
       this.passwordType.set('password')
-
     }
-
 
   }
 

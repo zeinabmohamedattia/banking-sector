@@ -22,7 +22,6 @@ export class CreateTransactionComponent implements OnInit {
   transactionForm!: FormGroup;
 
   ngOnInit() {
-    console.log(this.accountInfo());
     
     this.transactionForm = this.fb.group({
       type: ['', Validators.required],
