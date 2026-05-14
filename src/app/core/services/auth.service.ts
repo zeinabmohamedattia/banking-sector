@@ -1,26 +1,28 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { computed, Injectable, signal } from "@angular/core";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  readonly admin = signal<any>(this.getAdminFromStorage());
 
+  readonly isLoggedIn = computed(() => !!this.admin());
 
-
-  readonly isLoggedIn = signal<boolean>(!!this.getAdminFromStorage());
-
-  private getAdminFromStorage() {
+  getAdminFromStorage() {
     const admin = localStorage.getItem('admin');
     return admin ? JSON.parse(admin) : null;
   }
 
-  login(admin: any): void {
-    localStorage.setItem('admin', JSON.stringify(admin));
- 
-    this.isLoggedIn.set(true);
+  login(adminData: any): boolean {
+    localStorage.setItem('admin', JSON.stringify(adminData));
+
+    this.admin.set(adminData);
+
+    return true;
   }
+
   logout(): void {
     localStorage.removeItem('admin');
-    this.isLoggedIn.set(false);
+    this.admin.set(null);
   }
 }

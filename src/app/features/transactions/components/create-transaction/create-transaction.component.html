@@ -1,121 +1,125 @@
 
 
-        <form [formGroup]="transactionForm" (ngSubmit)="submit()" class="space-y-5 p-1">
-        
-            <!-- Info Box (يعرض الرصيد الحالي بشكل جذاب) -->
-            <div class="p-4 bg-indigo-50 rounded-xl flex justify-between items-center border border-indigo-100">
-                <div class="flex flex-col">
-                    <span class="text-[10px] font-black text-indigo-400 uppercase tracking-widest">Available Balance</span>
-                    <span class="text-sm font-mono font-bold text-indigo-700">{{ accountInfo().balance | number:'1.2-2' }} EGP</span>
-                </div>
-                <i class="pi pi-wallet text-indigo-300 text-xl"></i>
-            </div>
-        
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        
-                <!-- Transaction Type -->
-                <div class="relative flex flex-col gap-1.5">
-                    <label class="text-[11px] font-black text-gray-400 uppercase tracking-wider">Type *</label>
-                    <div class="relative">
-                        <select formControlName="type"
-                            [class.border-red-500]="transactionForm.get('type')?.touched && transactionForm.get('type')?.invalid"
-                            class="w-full h-11 px-3 bg-gray-50 border border-gray-200 rounded-xl text-sm appearance-none outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
-                            <option value="" disabled>Select Type</option>
-                            <option value="Debit">Debit (Withdrawal)</option>
-                            <option value="Credit">Credit (Deposit)</option>
-                        </select>
-                        <i
-                            class="pi pi-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-xs"></i>
+   
+            <form [formGroup]="transactionForm" (ngSubmit)="submit()" class="space-y-5 p-1">
+            
+                <!-- Info Box -->
+                <div class="p-4 bg-indigo-50 rounded-xl flex justify-between items-center border border-indigo-100">
+                    <div class="flex flex-col">
+                        <span class="text-[10px] font-black text-indigo-400 uppercase tracking-widest">Available Balance</span>
+                        <span class="text-sm font-mono font-bold text-indigo-700">{{ accountInfo().balance| number:'1.2-2' }}
+                            {{accountInfo().currency}}</span>
                     </div>
-                
-                    @if (transactionForm.get('type')?.touched && transactionForm.get('type')?.invalid) {
-                    <p class="text-[10px] text-red-500 font-bold uppercase tracking-tight">Transaction type is required</p>
-                    }          </div>
-        
-                <!-- Amount -->
-                <div class="flex flex-col gap-1.5">
-                    <label class="text-[11px] font-black text-gray-400 uppercase tracking-wider">Amount *</label>
-                    <div class="relative">
-                        <input type="number" formControlName="amount" placeholder="0.00"
-                            [class.border-red-500]="(transactionForm.get('amount')?.touched && transactionForm.get('amount')?.invalid) || transactionForm.hasError('insufficientBalance')"
+                    <i class="pi pi-wallet text-indigo-300 text-xl"></i>
+                </div>
+            
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            
+                    <!-- Transaction Type -->
+                    <div class="relative flex flex-col gap-1.5">
+                        <label class="text-[11px] font-black text-gray-400 uppercase tracking-wider">Type *</label>
+                        <div class="relative">
+                            <select formControlName="type"
+                                [class.border-red-500]="(transactionForm.get('type')?.dirty || transactionForm.get('type')?.touched) && transactionForm.get('type')?.invalid"
+                                class="w-full h-11 px-3 bg-gray-50 border border-gray-200 rounded-xl text-sm appearance-none outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+                                <option value="" disabled>Select Type</option>
+                                <option value="Debit">Debit (Withdrawal)</option>
+                                <option value="Credit">Credit (Deposit)</option>
+                            </select>
+                            <i
+                                class="pi pi-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-xs"></i>
+                        </div>
+                        @if ((transactionForm.get('type')?.dirty || transactionForm.get('type')?.touched) &&
+                        transactionForm.get('type')?.invalid) {
+                        <p class="text-[10px] text-red-500 font-bold uppercase tracking-tight">Transaction type is required</p>
+                        }
+                    </div>
+            
+                    <!-- Amount -->
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-[11px] font-black text-gray-400 uppercase tracking-wider">Amount *</label>
+                        <div class="relative">
+                            <input type="number" formControlName="amount" placeholder="0.00"
+                                [class.border-red-500]="((transactionForm.get('amount')?.dirty || transactionForm.get('amount')?.touched) && transactionForm.get('amount')?.invalid) || transactionForm.hasError('insufficientBalance')"
+                                class="w-full h-11 px-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+                        </div>
+            
+                        @if ((transactionForm.get('amount')?.dirty || transactionForm.get('amount')?.touched) &&
+                        transactionForm.get('amount')?.invalid) {
+                        <p class="text-[10px] text-red-500 font-bold uppercase tracking-tight">
+                            {{ transactionForm.get('amount')?.hasError('required') ? 'Amount is required' : 'Invalid Amount (0 -
+                            100k)' }}
+                        </p>
+                        }
+            
+                        @if (transactionForm.hasError('insufficientBalance') && (transactionForm.get('amount')?.dirty ||
+                        transactionForm.get('amount')?.touched)) {
+                        <p
+                            class="text-[10px] text-red-600 bg-red-50 p-1.5 rounded-lg font-bold uppercase tracking-tight text-center border border-red-100 mt-1">
+                            <i class="pi pi-exclamation-circle mr-1"></i> Insufficient Balance
+                        </p>
+                        }
+                    </div>
+            
+                    <!-- Date -->
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-[11px] font-black text-gray-400 uppercase tracking-wider">Date *</label>
+                        <input type="date" formControlName="date"
+                            [class.border-red-500]="(transactionForm.get('date')?.dirty || transactionForm.get('date')?.touched) && transactionForm.get('date')?.invalid"
                             class="w-full h-11 px-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+            
+                        @if ((transactionForm.get('date')?.dirty || transactionForm.get('date')?.touched) &&
+                        transactionForm.get('date')?.invalid) {
+                        <p class="text-[10px] text-red-500 font-bold uppercase tracking-tight">
+                            {{ transactionForm.get('date')?.hasError('required') ? 'Date is required' : 'Date cannot be in future'
+                            }}
+                        </p>
+                        }
                     </div>
-                
-                    <!-- 1. خطأ: الحقل فارغ -->
-                    @if (transactionForm.get('amount')?.hasError('required') && transactionForm.get('amount')?.touched) {
-                    <p class="text-[10px] text-red-500 font-bold uppercase tracking-tight">Amount is required</p>
-                    }
-                
-                    <!-- 2. خطأ: القيمة غير صحيحة (أصغر من 0 أو أكبر من 100 ألف) -->
-                    @if (transactionForm.get('amount')?.touched && (transactionForm.get('amount')?.hasError('min') ||
-                    transactionForm.get('amount')?.hasError('max'))) {
-                    <p class="text-[10px] text-red-500 font-bold uppercase tracking-tight">Invalid Amount (0 - 100k)</p>
-                    }
-                
-                    <!-- 3. خطأ: الرصيد غير كافٍ (Cross-field Validation) -->
-                    @if (transactionForm.hasError('insufficientBalance') && transactionForm.get('amount')?.touched) {
-                    <p
-                        class="text-[10px] text-red-600 bg-red-50 p-1.5 rounded-lg font-bold uppercase tracking-tight text-center border border-red-100 mt-1">
-                        <i class="pi pi-exclamation-circle mr-1"></i> Insufficient Balance
-                    </p>
-                    }          </div>
-        
-                <!-- Date -->
-                <div class="flex flex-col gap-1.5">
-                    <label class="text-[11px] font-black text-gray-400 uppercase tracking-wider">Date *</label>
-                    <input type="date" formControlName="date"
-                        [class.border-red-500]="transactionForm.get('date')?.touched && transactionForm.get('date')?.invalid"
-                        class="w-full h-11 px-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
-                
-                    @if (transactionForm.get('date')?.hasError('required') && transactionForm.get('date')?.touched) {
-                    <p class="text-[10px] text-red-500 font-bold uppercase tracking-tight">Date is required</p>
-                    }
-                    @else if (transactionForm.get('date')?.hasError('futureDate') && transactionForm.get('date')?.touched) {
-                    <p class="text-[10px] text-red-500 font-bold uppercase tracking-tight">Date cannot be in future</p>
-                    }          </div>
-        
-                <!-- Category -->
-                <div class="relative flex flex-col gap-1.5">
-                    <label class="text-[11px] font-black text-gray-400 uppercase tracking-wider">Category *</label>
-                    <div class="relative">
-                        <select formControlName="category"
-                            [class.border-red-500]="transactionForm.get('category')?.touched && transactionForm.get('category')?.invalid"
-                            class="w-full h-11 px-3 bg-gray-50 border border-gray-200 rounded-xl text-sm appearance-none outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
-                            <option value="" disabled>Select Category</option>
-                            @for (cat of categoryOptions(); track cat) {
-                            <option [value]="cat">{{cat}}</option>
-                            }
-                        </select>
-                        <i
-                            class="pi pi-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-xs"></i>
+            
+                    <!-- Category -->
+                    <div class="relative flex flex-col gap-1.5">
+                        <label class="text-[11px] font-black text-gray-400 uppercase tracking-wider">Category *</label>
+                        <div class="relative">
+                            <select formControlName="category"
+                                [class.border-red-500]="(transactionForm.get('category')?.dirty || transactionForm.get('category')?.touched) && transactionForm.get('category')?.invalid"
+                                class="w-full h-11 px-3 bg-gray-50 border border-gray-200 rounded-xl text-sm appearance-none outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+                                <option value="" disabled>Select Category</option>
+                                @for (cat of categoryOptions(); track cat) {
+                                <option [value]="cat">{{cat}}</option>
+                                }
+                            </select>
+                            <i
+                                class="pi pi-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-xs"></i>
+                        </div>
+                        @if ((transactionForm.get('category')?.dirty || transactionForm.get('category')?.touched) &&
+                        transactionForm.get('category')?.invalid) {
+                        <p class="text-[10px] text-red-500 font-bold uppercase tracking-tight">Please select a category</p>
+                        }
                     </div>
-                
-                    <!-- رسالة الخطأ هنا -->
-                    @if (transactionForm.get('category')?.touched && transactionForm.get('category')?.invalid) {
-                    <p class="text-[10px] text-red-500 font-bold uppercase tracking-tight">Please select a category</p>
-                    }          </div>
-        
-                <!-- Merchant -->
-                <div class="md:col-span-2 flex flex-col gap-1.5">
-                    <label class="text-[11px] font-black text-gray-400 uppercase tracking-wider">Merchant *</label>
-                    <input type="text" formControlName="merchant" placeholder="e.g. Amazon, Starbucks"
-                        [class.border-red-500]="transactionForm.get('merchant')?.touched && transactionForm.get('merchant')?.invalid"
-                        class="w-full h-11 px-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
-                    @if (transactionForm.get('merchant')?.touched && transactionForm.get('merchant')?.invalid) {
-                    <p class="text-[10px] text-red-500 font-bold uppercase tracking-tight">Required (3-50 chars)</p>
-                    }
+            
+                    <!-- Merchant -->
+                    <div class="md:col-span-2 flex flex-col gap-1.5">
+                        <label class="text-[11px] font-black text-gray-400 uppercase tracking-wider">Merchant *</label>
+                        <input type="text" formControlName="merchant" placeholder="e.g. Amazon, Starbucks"
+                            [class.border-red-500]="(transactionForm.get('merchant')?.dirty || transactionForm.get('merchant')?.touched) && transactionForm.get('merchant')?.invalid"
+                            class="w-full h-11 px-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+                        @if ((transactionForm.get('merchant')?.dirty || transactionForm.get('merchant')?.touched) &&
+                        transactionForm.get('merchant')?.invalid) {
+                        <p class="text-[10px] text-red-500 font-bold uppercase tracking-tight">Required (3-50 chars)</p>
+                        }
+                    </div>
                 </div>
-            </div>
-        
-            <!-- Actions Footer -->
-            <div class="flex justify-end items-center gap-4 pt-6 mt-4 border-t border-gray-100">
-                <button type="button" (click)="cancel()"
-                    class="px-5 py-2 text-sm font-bold text-gray-400 hover:text-gray-600 transition-colors">
-                    Cancel
-                </button>
-                <button type="submit" [disabled]="transactionForm.invalid"
-                    class="flex items-center gap-2 px-8 py-2.5 bg-indigo-600 text-white rounded-xl text-sm font-bold shadow-lg shadow-indigo-100 hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-95">
-                    <i class="pi pi-check text-xs"></i>
-                    Confirm Transaction
-                </button>
-            </div> </form>
+            
+                <!-- Actions Footer -->
+                <div class="flex justify-end items-center gap-4 pt-6 mt-4 border-t border-gray-100">
+                    <button type="button" (click)="cancel()"
+                        class="px-5 py-2 text-sm font-bold text-gray-400 hover:text-gray-600 transition-colors">
+                        Cancel
+                    </button>
+                    <button type="submit" [disabled]="transactionForm.invalid"
+                        class="flex items-center gap-2 px-8 py-2.5 bg-indigo-600 text-white rounded-xl text-sm font-bold shadow-lg shadow-indigo-100 hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-95">
+                        <i class="pi pi-check text-xs"></i>
+                        Confirm Transaction
+                    </button>
+                </div>     </form>

@@ -1,117 +1,30 @@
-// // dashboard.component.ts
-
-// import { Component, computed, inject, OnInit, signal } from '@angular/core';
-// import { NgClass } from '@angular/common';
-// import { CustomerService } from '../../core/services/customer.service';
-// import { RouterLink } from "@angular/router";
-
-// interface Customer {
-//   CIF: string;
-//   name: string;
-//   nationalId: string;
-//   segment: string;
-//   email: string;
-//   phone: string;
-// }
-
-// @Component({
-//   selector: 'app-dashboard',
-//   imports: [RouterLink],
-//   templateUrl: './dashboard.component.html',
-// })
-// export class DashboardComponent implements OnInit {
-//   private readonly customerService = inject(CustomerService)
-
-//   readonly customers = signal<Customer[]>([]);
-
-//   readonly searchTerm = signal('');
-
-//   ngOnInit(): void {
-//     this.getCustomers();
-//   }
-//   getCustomers():void {
-//     this.customerService.getCustomers().subscribe({
-//       next: (response) => {
-//         this.customers.set(response);
-//         console.log(response);
-        
-//       },
-
-//       error: (error) => {
-//         console.error(error);
-//       },
-//     })
-//   }
-
-//   // readonly filteredCustomers = computed(() => {
-
-//   //   const term = this.searchTerm().toLowerCase();
-
-//   //   return this.customers().filter(customer =>
-//   //     customer.name.toLowerCase().includes(term) ||
-//   //     customer.CIF.toLowerCase().includes(term)
-//   //   );
-//   // });
-
-//   readonly priorityCustomersCount = computed(() =>
-//     this.customers().filter(customer => customer.segment === 'Priority').length
-//   );
-
-//   readonly retailCustomersCount = computed(() =>
-//     this.customers().filter(customer => customer.segment === 'Retail').length
-//   );
-
-//   // searchCustomer(event: Event): void {
-
-//   //   const input = event.target as HTMLInputElement;
-
-//   //   this.searchTerm.set(input.value);
-//   // }
-
-// }
-// dashboard.component.ts
 
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CustomerService } from '../../core/services/customer.service';
 
-// PrimeNG
-import { CardModule } from 'primeng/card';
-import { TableModule } from 'primeng/table';
-import { TagModule } from 'primeng/tag';
-import { AvatarModule } from 'primeng/avatar';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { TooltipModule } from 'primeng/tooltip';
 
-interface Customer {
-  CIF: string;
-  name: string;
-  nationalId: string;
-  segment: string;
-  email: string;
-  phone: string;
-}
+
+import { PaginationHelper } from '../../shared/helpers/pagination.helper';
+import { SkeletonTableComponent } from "../../shared/components/skeleton-table/skeleton-table.component";
+import { Customer } from '../../core/models/customer.interface';
+
+
 
 @Component({
   selector: 'app-dashboard',
   imports: [
     RouterLink,
-    CardModule,
-    TableModule,
-    TagModule,
-    AvatarModule,
-    ButtonModule,
-    InputTextModule,
-    TooltipModule,
-  ],
+    SkeletonTableComponent
+],
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {
   private readonly customerService = inject(CustomerService);
-
   readonly customers = signal<Customer[]>([]);
-
+  pagination = new PaginationHelper(this.customers);
+  isLoading = signal(true);
+  errorMessage = signal<string | null>(null);
   readonly searchTerm = signal('');
 
   ngOnInit(): void {
@@ -119,25 +32,25 @@ export class DashboardComponent implements OnInit {
   }
 
   getCustomers(): void {
-    this.customerService.getCustomers().subscribe({
+    this.isLoading.set(true)
+    this.customerService.getCustomers()
+      .subscribe({
       next: (response) => {
         this.customers.set(response);
         console.log(response);
+        this.isLoading.set(false)
+
       },
       error: (error) => {
         console.error(error);
+        this.errorMessage.set(error)
+        this.isLoading.set(false)
+
       },
     });
   }
-
-  // readonly filteredCustomers = computed(() => {
-  //   const term = this.searchTerm().toLowerCase();
-  //   return this.customers().filter(customer =>
-  //     customer.name.toLowerCase().includes(term) ||
-  //     customer.CIF.toLowerCase().includes(term)
-  //   );
-  // });
-
+  protected readonly Math = Math;
+  
   readonly priorityCustomersCount = computed(() =>
     this.customers().filter(customer => customer.segment === 'Priority').length
   );
@@ -146,8 +59,4 @@ export class DashboardComponent implements OnInit {
     this.customers().filter(customer => customer.segment === 'Retail').length
   );
 
-  // searchCustomer(event: Event): void {
-  //   const input = event.target as HTMLInputElement;
-  //   this.searchTerm.set(input.value);
-  // }
 }

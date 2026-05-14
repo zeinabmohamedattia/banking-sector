@@ -1,73 +1,110 @@
-<div class="min-h-screen bg-gray-50 p-4 md:p-8">
-  
+<div class="  bg-gray-50 px-4 md:px-8">
+
     <!-- Top Actions Bar -->
-    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-10">
+    <div class="mx-auto flex flex-col xl:flex-row xl:items-center xl:justify-between gap-6 mb-10">
 
-        <div class="flex flex-col md:flex-row md:items-center gap-8 w-full lg:w-auto">
-            <div class="space-y-1">
-                <h1 class="text-3xl font-black text-gray-900 tracking-tight">Account Transactions</h1>
-                <p class="text-gray-400 text-sm font-medium">
-                    Activity overview for
-                    <span class="text-indigo-600 font-bold bg-indigo-50 px-2 py-0.5 rounded">#{{ currentAccountId()
-                        }}</span>
-                </p>
-            </div>
+        <div class="flex flex-col gap-5 w-full">
 
-            @if (currentAccount(); as acc) {
-            <div
-                class="flex flex-wrap items-center gap-2 bg-white p-2 pr-6 rounded-[2rem] border border-gray-100 shadow-xl shadow-gray-200/40">
+            <div class="flex flex-col lg:flex-row lg:items-center gap-5 w-full">
 
-                <div class="flex items-center divide-x divide-gray-100">
-                    <div class="px-6">
-                        <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-0.5">Total
-                            Balance</span>
-                        <span class="text-lg font-mono font-black text-gray-900">
-                            {{ acc.balance | number:'1.2-2' }} <span class="text-indigo-600 text-xs ml-0.5">{{
-                                acc.currency
-                                }}</span>
+                <!-- Heading -->
+                <div class="space-y-1  ">
+                    <h1 class="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight">
+                        Account Transactions
+                    </h1>
+
+                    <p class="text-gray-400 text-xs sm:text-sm font-medium">
+                        Activity overview for
+                        <span class="text-indigo-600 font-bold bg-indigo-50 px-2 py-0.5 rounded">
+                            #{{ currentAccountId() }}
                         </span>
-                    </div>
+                    </p>
+                </div>
 
-                    <div class="px-6 hidden sm:block">
-                        <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-1">Account
-                            Status</span>
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs font-bold text-gray-700">{{ acc.type }}</span>
-                            <span
-                                [class]="acc.status === 'Active' ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'"
-                                class="px-2 py-0.5 rounded-lg text-[9px] font-black uppercase border border-current/10">
-                                {{ acc.status }}
+                @if (currentAccount(); as acc) {
+
+                <!-- Account Card -->
+                <div
+                    class="w-full overflow-x-hidden bg-white p-3 sm:p-4 rounded-3xl border border-gray-100 shadow-xl shadow-gray-200/40">
+
+                    <div
+                        class="flex flex-col sm:flex-row sm:items-center sm:divide-x divide-gray-100 gap-4 sm:gap-0 min-w-max">
+
+                        <!-- Balance -->
+                        <div class="sm:px-6">
+                            <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-1">
+                                Total Balance
+                            </span>
+
+                            <span class="text-sm sm:text-base font-black text-gray-900">
+                                {{ acc.balance | number }}
+
+                                <span class="text-indigo-600 text-xs ml-0.5">
+                                    {{ acc.currency }}
+                                </span>
                             </span>
                         </div>
-                    </div>
 
-                    <div class="px-6 hidden md:block">
-                        <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-0.5">IBAN
-                            Number</span>
-                        <div class="flex items-center gap-2 text-gray-500">
-                            <i class="pi pi-lock text-[10px]"></i>
-                            <span class="text-xs font-mono tracking-tighter">{{ acc.iban }}</span>
+                        <!-- Status -->
+                        <div class="sm:px-6">
+                            <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-1">
+                                Status
+                            </span>
+
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-bold text-gray-700">
+                                    {{ acc.type }}
+                                </span>
+
+                                <span
+                                    class='bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-lg text-[9px] font-black uppercase border border-current/10'>
+                                    {{ acc.status }}
+                                </span>
+                            </div>
                         </div>
+
+                        <!-- IBAN -->
+                        <div class="sm:px-6">
+                            <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-1">
+                                IBAN Number
+                            </span>
+
+                            <div class="flex items-center gap-2 text-gray-500">
+
+                                <span class="text-xs font-mono tracking-tighter break-all">
+                                    {{ acc.iban }}
+                                </span>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
+
+                }
             </div>
-            }
         </div>
 
-        <div class="flex gap-3 w-full md:w-auto shrink-0">
-            <button (click)="exportCsv()"
-                class="flex-1 md:flex-none px-6 py-3 bg-white border border-gray-200 rounded-2xl text-sm font-bold text-gray-600 shadow-sm hover:bg-gray-50 transition-all active:scale-95 flex items-center justify-center gap-2">
-                <i class="pi pi-cloud-download  group-hover:bounce"></i>
+        <!-- Buttons -->
+        <div class="flex flex-col sm:flex-row gap-3 w-full xl:w-auto shrink-0">
+
+            <button (click)="showCreateModal()"
+                class="w-full sm:w-auto px-4 py-3 cursor-pointer bg-indigo-600 rounded-2xl text-sm font-bold text-white shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition-all active:scale-95 flex items-center justify-center gap-2">
+
+                <i class="pi pi-plus"></i>
+
+                New Transaction
+            </button>
+
+            <button [disabled]="filteredTransactions().length==0" (click)="exportCsv()"
+                class="w-full sm:w-auto px-4 py-3 cursor-pointer bg-white border border-gray-200 rounded-2xl text-sm font-bold text-gray-600 shadow-sm hover:bg-gray-50 transition-all active:scale-95 flex items-center justify-center gap-2">
+
+                <i class="pi pi-cloud-download"></i>
 
                 Export
             </button>
-            <button (click)="showCreateModal()"
-                class="flex-1 md:flex-none px-6 py-3 bg-indigo-600 rounded-2xl text-sm font-bold text-white shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition-all active:scale-95 flex items-center justify-center gap-2">
-                <i class="pi pi-plus"></i>
-                New Transaction
-            </button>
         </div>
     </div>
+
 
     <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8">
 
@@ -84,7 +121,6 @@
                         class="text-sm text-indigo-600 hover:underline font-semibold">Reset</button>
                 </div>
 
-                <!-- Date Range -->
                 <div class="space-y-4 mb-8">
                     <div>
                         <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2 block">Start
@@ -118,26 +154,7 @@
                     </div>
                 </div>
 
-                <!-- Category Chips -->
-                <!-- <div>
-                    <label
-                        class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-3 block">Category</label>
-                    <div class="flex flex-wrap gap-2">
-                        <button (click)="updateFilters({category: ''})"
-                            [class]="!filters().category ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-600 hover:bg-gray-100'"
-                            class="px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all">All</button>
-
-                        @for (cat of categories; track cat.label) {
-                        <button (click)="updateFilters({category: cat.label})"
-                            [class]="filters().category === cat.label ? cat.class + ' ring-2 ring-offset-1 ring-current' : 'bg-gray-50 text-gray-600 hover:bg-gray-100'"
-                            class="px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all">{{cat.label}}</button>
-                        }
-                    </div>
-                </div> -->
-
-
                 <div class="flex flex-wrap gap-2">
-                    <!-- زر الكل -->
                     <button (click)="updateFilters({ category: '' })"
                         class="px-4 py-2 rounded-xl text-sm font-bold transition-all" [class]="!filters().category 
                                                  ? 'bg-gray-900 text-white shadow-md' 
@@ -161,23 +178,9 @@
         <!-- Main List -->
         <main class="lg:col-span-3 space-y-4">
 
-            <!-- Table Heading / Sorting -->
             <div class="flex items-center justify-between px-2">
                 <h5 class="text-sm font-bold text-gray-400 uppercase tracking-widest">Transactions List</h5>
-                <!-- <div class="flex gap-4">
-                    <button (click)="setSort('date')"
-                        class="text-xs font-bold flex items-center gap-1 transition-colors"
-                        [class.text-indigo-600]="sortField() === 'date'">
-                        Date
-                        <i [class]="sortField() === 'date' ? (sortDir() === 'asc' ? 'pi pi-sort-amount-up' : 'pi pi-sort-amount-down') : 'pi pi-sort-alt'"
-                            style="font-size: 0.7rem"></i> </button>
-                    <button (click)="setSort('amount')"
-                        class="text-xs font-bold flex items-center gap-1 transition-colors"
-                        [class.text-indigo-600]="sortField() === 'amount'">
-                        amount
-                        <i [class]="sortField() === 'amount' ? (sortDir() === 'asc' ? 'pi pi-sort-amount-up' : 'pi pi-sort-amount-down') : 'pi pi-sort-alt'"
-                            style="font-size: 0.7rem"></i> </button>
-                </div> -->
+
             </div>
 
             <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden">
@@ -195,7 +198,9 @@
                                 <th class="px-6 py-5 text-[12px] font-black text-gray-400 uppercase tracking-widest">
                                     Category
                                 </th>
-
+                                <th class="px-6 py-5 text-[12px] font-black text-gray-400 uppercase tracking-widest">
+                                    Type
+                                </th>
                                 <!-- Date Column (Sortable) -->
                                 <th (click)="setSort('date')"
                                     class="px-6 py-5 text-[12px] font-black uppercase tracking-widest cursor-pointer hover:bg-gray-100 transition-colors group">
@@ -224,7 +229,9 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-50">
-                            @for (tx of filteredTransactions(); track tx.id) {
+                            @if (isLoading()) {
+                            <app-skeleton-table [rows]="5" [cols]="4"></app-skeleton-table> }
+                            @for (tx of pagination.paginatedData(); track tx.id) {
                             <tr class="hover:bg-indigo-50/30 transition-colors group">
                                 <td class="px-8 py-5">
                                     <div class="flex items-center gap-4">
@@ -241,15 +248,27 @@
                                         {{ tx.category }}
                                     </span>
                                 </td>
+                             
+                                <td>
+                                    <span class=" px-6 py-5 text-sm text-gray-400 ">
+
+                                        {{ tx.type }}
+                                        <i
+                                            [class]="tx.type === 'Credit' ? 'pi pi-arrow-down-left text-emerald-500 ' : 'pi pi-arrow-up-right text-red-500'"></i>
+                                    </span>
+                                </td>
+
                                 <td class="px-6 py-5 text-sm text-gray-400  ">{{tx.date |
                                     date:'mediumDate'}}</td>
                                 <td class="px-8 py-5 text-right">
+
                                     <span [class]="tx.type === 'Debit' ? 'text-red-500' : 'text-emerald-500'"
                                         class=" text-sm tracking-tight">
                                         {{tx.type === 'Debit' ? '-' : '+'}}{{tx.amount | number:'1.2-2'}}
-                                        <span class="text-[12px] opacity-50 ml-1">EGP</span>
+                                        <span class="text-[12px] opacity-50 ml-1">{{currentAccount()?.currency}}</span>
                                     </span>
                                 </td>
+
                             </tr>
                             } @empty {
                             <tr>
@@ -263,10 +282,57 @@
                                 </td>
                             </tr>
                             }
+
                         </tbody>
+
                     </table>
+
                 </div>
+
+                <!-- Pagination Bar -->
+                <div
+                    class="px-8 py-5 bg-gray-50/30 border-t border-gray-50 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="text-xs font-black text-gray-400 uppercase tracking-widest">
+                        Showing
+                        <span class="text-indigo-600">
+                            {{ (pagination.currentPage() - 1) * pagination.pageSize() + 1 }} -
+                            {{ Math.min(pagination.currentPage() * pagination.pageSize(), filteredTransactions().length)
+                            }}
+                        </span>
+                        of {{ filteredTransactions().length }} Transactions
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button (click)="pagination.goToPage(pagination.currentPage() - 1)"
+                            [disabled]="pagination.currentPage() === 1"
+                            class="w-10 h-10 rounded-xl border border-gray-200 bg-white flex items-center justify-center text-gray-400 hover:text-indigo-600 transition-all disabled:opacity-30">
+                            <i class="pi pi-chevron-left text-xs font-bold"></i>
+                        </button>
+
+                        <div class="flex gap-1.5">
+                            
+                            @for (p of [].constructor(pagination.totalPages()); track $index) {
+                            <button (click)="pagination.goToPage($index + 1)" [class]="$index + 1 === pagination.currentPage() 
+                                ? 'bg-indigo-600 text-white shadow-lg border-indigo-600' 
+                                : 'bg-white text-gray-500 border-gray-200 hover:bg-gray-50'"
+                                class="w-10 h-10 rounded-xl border text-xs font-black transition-all">
+                                {{ $index + 1 }}
+                            </button>
+                            }
+                        </div>
+
+                        <button (click)="pagination.goToPage(pagination.currentPage() + 1)"
+                            [disabled]="pagination.currentPage() === pagination.totalPages()"
+                            class="w-10 h-10 rounded-xl border border-gray-200 bg-white flex items-center justify-center text-gray-400 hover:text-indigo-600 transition-all disabled:opacity-30">
+                            <i class="pi pi-chevron-right text-xs font-bold"></i>
+                        </button>
+                    </div>
+                </div>
+
+
+
             </div>
+
         </main>
     </div>
 </div>

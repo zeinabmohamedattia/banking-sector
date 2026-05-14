@@ -17,80 +17,49 @@
     "iban": "EG380019000000000987654321",
     "status": "Active"
   },
-
   {
-    "id": "A1003",
+    "id": "A2001",
     "customerId": "C002",
     "type": "Current",
     "currency": "EGP",
-    "balance": 5400.25,
-    "iban": "EG380019000000000112233445",
+    "balance": 9800.75,
+    "iban": "EG120019000000000456789123",
     "status": "Active"
   },
   {
-    "id": "A1004",
+    "id": "A2002",
     "customerId": "C002",
     "type": "Savings",
     "currency": "EGP",
-    "balance": 180000.0,
-    "iban": "EG380019000000000556677889",
+    "balance": 12050.25,
+    "iban": "EG120019000000000654321987",
     "status": "Active"
   },
-
   {
-    "id": "A1005",
+    "id": "A3001",
     "customerId": "C003",
     "type": "Current",
     "currency": "EGP",
-    "balance": 8900.75,
-    "iban": "EG380019000000000998877665",
-    "status": "Inactive"
-  },
-  {
-    "id": "A1006",
-    "customerId": "C003",
-    "type": "Savings",
-    "currency": "EGP",
-    "balance": 45000.0,
-    "iban": "EG380019000000000443322110",
-    "status": "Active"
-  },
-
-  {
-    "id": "A1007",
-    "customerId": "C004",
-    "type": "Current",
-    "currency": "EGP",
-    "balance": 22000.0,
-    "iban": "EG380019000000000667788990",
+    "balance": 5400.0,
+    "iban": "EG450019000000000789123456",
     "status": "Active"
   },
   {
-    "id": "A1008",
+    "id": "A4001",
     "customerId": "C004",
     "type": "Savings",
     "currency": "EGP",
-    "balance": 950000.0,
-    "iban": "EG380019000000000223344556",
+    "balance": 45500.8,
+    "iban": "EG550019000000000321654987",
     "status": "Active"
   },
-
   {
-    "id": "A1009",
+    "id": "A5001",
     "customerId": "C005",
     "type": "Current",
     "currency": "EGP",
-    "balance": 3100.0,
-    "iban": "EG380019000000000778899001",
-    "status": "Inactive"
-  },
-  {
-    "id": "A1010",
-    "customerId": "C005",
-    "type": "Savings",
-    "currency": "EGP",
-    "balance": 125000.0,
-    "iban": "EG380019000000000889900112",
+    "balance": 22300.45,
+    "iban": "EG770019000000000852741963",
     "status": "Active"
   }
 ]

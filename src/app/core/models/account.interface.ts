@@ -1,4 +1,3 @@
-export type AccountStatus = 'Active' | 'Inactive' | 'Blocked';
 export type AccountType = 'Current' | 'Savings';
 export type AccountCurrency = 'EGP' | 'USD' | 'EUR' | 'GBP';
 
@@ -9,5 +8,5 @@ export interface Account {
     currency: AccountCurrency;
     balance: number;
     iban: string;
-    status: AccountStatus;
+    status: string;
 }

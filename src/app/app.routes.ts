@@ -1,48 +1,55 @@
 import { Routes } from '@angular/router';
-import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
-import { DashboardComponent } from './features/dashboard/dashboard.component';
-import { CustomerDetailsComponent } from './features/customer-details/customer-details.component';
-import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
-import { LoginComponent } from './features/login/login.component';
-import { NotfoundComponent } from './features/notfound/notfound.component';
-import { TransactionsComponent } from './features/transactions/transactions.component';
-import { loginGuard } from './core/auth/guards/login-guard';
+  import { loginGuard } from './core/auth/guards/login-guard';
 import { authGuard } from './core/auth/guards/auth.guard';
-// import { loginGuard } from './core/auth/guards/login-guard';
-// import { authGuard } from './core/auth/guards/auth-guard';
-
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     {
-        path: '', component: MainLayoutComponent, children: [
+     path: '',
+        canActivate: [authGuard],
+        loadComponent: () =>
+        import('./layouts/main-layout/main-layout.component').then(c => c.MainLayoutComponent),
+        children:  [
+
             {
-                path: 'dashboard'
-                , component: DashboardComponent,
+                path: 'dashboard',
+                loadComponent: () =>
+                    import('./features/dashboard/dashboard.component').then(c => c.DashboardComponent),
+                canActivate: [authGuard],
                 title: 'Dashboard Page',
-                canActivate: [authGuard],
+
             },
             {
-                path: 'customer/:cif', component: CustomerDetailsComponent,
+                path: 'customer/:cif',
+                loadComponent: () =>
+                    import('./features/customer-details/customer-details.component').then(c => c.CustomerDetailsComponent),
+                canActivate: [authGuard],
                 title: 'Customer Details Page',
-                canActivate: [authGuard],
+
             },
             {
-                path: 'transactions/:accountId', component: TransactionsComponent,
-                title: 'Transactions Page',
+                path: 'transactions/:accountId',
+                loadComponent: () =>
+                    import('./features/transactions/transactions.component').then(c => c.TransactionsComponent),
                 canActivate: [authGuard],
+                title: 'Transactions Page',
+
             },
+
         ]
     },
     {
-        path: '', component: AuthLayoutComponent, children: [
+        path: '', loadComponent: () =>
+            import('./layouts/auth-layout/auth-layout.component').then(c => c.AuthLayoutComponent), children: [
+
             {
-                path: 'login', component: LoginComponent,
+                path: 'login',
                 canActivate: [loginGuard],
+                loadComponent: () =>
+                    import('./features/login/login.component').then(c => c.LoginComponent),
+                title: 'Login Page'
 
-                 title: 'Login Page'
             },
-
         ]
     },
-    { path: '**', component: NotfoundComponent, title: 'Not Found Page' }
+    { path: '**', redirectTo: 'dashboard' }
 ];

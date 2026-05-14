@@ -18,27 +18,25 @@
   {
     "CIF": "C003",
     "name": "Omar Khaled",
-    "nationalId": "29704151234569",
+    "nationalId": "30107231234569",
     "segment": "Retail",
     "email": "omar.khaled@mail.com",
-    "phone": "+201223456789"
+    "phone": "+201223344556"
   },
   {
     "CIF": "C004",
-    "name": "Mohamed Reda",
-    "nationalId": "29506151234570",
-    "segment": "Priority",
-    "email": "Mohamed.reda@mail.com",
-    "phone": "+201334567890"
+    "name": "Sara Mostafa",
+    "nationalId": "29709111234570",
+    "segment": "Retail",
+    "email": "sara.mostafa@mail.com",
+    "phone": "+201334455667"
   },
   {
     "CIF": "C005",
-    "name": "Sara Adel",
-    "nationalId": "29506151234571",
+    "name": "Youssef Adel",
+    "nationalId": "29903151234571",
     "segment": "Priority",
-    "email": "sara.adel@mail.com",
-    "phone": "+20133567894"
+    "email": "youssef.adel@mail.com",
+    "phone": "+201445566778"
   }
-  
-
 ]
